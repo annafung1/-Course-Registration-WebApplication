@@ -1,0 +1,295 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: enrolldb-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: enrolldb
+spec:
+  selector:
+    app: enrolldb
+  ports:
+    - port: 3306
+      targetPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enrolldb
+spec:
+  selector:
+    matchLabels:
+      app: enrolldb
+  template:
+    metadata:
+      labels:
+        app: enrolldb
+    spec:
+      containers:
+        - name: enrolldb
+          image: annafung/coe692:enrolldb
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: storage
+              mountPath: /data/enrolldb
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: enrolldb-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enrollcourse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: enrollcourse
+  template:
+    metadata:
+      labels:
+        app: enrollcourse
+    spec:
+      containers:
+        - name: enrollcourse
+          image: annafung/coe692:enrollWebApp
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_URL
+              value: borrowdb:3306
+            - name: kubeMQAddress
+              value: 10.24.14.133:50000
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: waitlistdb-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: waitlistdb
+spec:
+  selector:
+    app: waitlistdb
+  ports:
+    - port: 3306
+      targetPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: waitlistdb
+spec:
+  selector:
+    matchLabels:
+      app: waitlistdb
+  template:
+    metadata:
+      labels:
+        app: waitlistdb
+    spec:
+      containers:
+        - name: waitlistdb
+          image: annafung/coe692:waitlistdb
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: storage
+              mountPath: /data/waitlistdb
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: waitlistdb-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: waitlistcourse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: waitlistcourse
+  template:
+    metadata:
+      labels:
+        app: waitlistcourse
+    spec:
+      containers:
+        - name: waitlistcourse
+          image: annafung/coe692:waitlistWebApp
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_URL
+              value: waitlistdb:3306
+            - name: kubeMQAddress
+              value: 10.24.14.133:50000
+          imagePullPolicy: Always
+---
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: searchdb-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: searchdb
+spec:
+  selector:
+    app: searchdb
+  ports:
+    - port: 3306
+      targetPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: searchdb
+spec:
+  selector:
+    matchLabels:
+      app: searchdb
+  template:
+    metadata:
+      labels:
+        app: searchdb
+    spec:
+      containers:
+        - name: searchdb
+          image: annafung/coe692:searchdb
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: storage
+              mountPath: /data/searchdb
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: searchdb-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: searchcourse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: searchcourse
+  template:
+    metadata:
+      labels:
+        app: searchcourse
+    spec:
+      containers:
+        - name: searchcourse
+          image: annafung/coe692:searchWebApp
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_URL
+              value: searchdb:3306
+            - name: kubeMQAddress
+              value: 10.24.14.133:50000
+          imagePullPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: annafung/coe692:frontendWebApp
+          ports:
+            - containerPort: 8080
+          env:
+            - name: searchService
+              value: searchcourse:80
+
+            - name: waitlistService
+              value: waitlistcourse:80
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: enrollcourse
+spec:
+  selector:
+    app: enrollcourse
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: waitlistcourse
+spec:
+  selector:
+    app: waitlistcourse
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: searchcourse
+spec:
+  selector:
+    app: searchcourse
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: LoadBalancer
