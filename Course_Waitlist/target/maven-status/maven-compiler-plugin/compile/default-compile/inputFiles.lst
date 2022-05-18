@@ -1,0 +1,6 @@
+/home/student/NetBeansProjects/lab5/Course_Waitlist/src/main/java/ryerson/ca/waitlist/business/Messaging.java
+/home/student/NetBeansProjects/lab5/Course_Waitlist/src/main/java/ryerson/ca/waitlist/persistence/Waitlist_CRUD.java
+/home/student/NetBeansProjects/lab5/Course_Waitlist/src/main/java/ryerson/ca/waitlist/endpoint/ApplicationConfig.java
+/home/student/NetBeansProjects/lab5/Course_Waitlist/src/main/java/ryerson/ca/waitlist/business/WaitlistBusiness.java
+/home/student/NetBeansProjects/lab5/Course_Waitlist/src/main/java/ryerson/ca/waitlist/endpoint/WaitlistResource.java
+/home/student/NetBeansProjects/lab5/Course_Waitlist/src/main/java/ryerson/ca/waitlist/helper/Waitlist.java

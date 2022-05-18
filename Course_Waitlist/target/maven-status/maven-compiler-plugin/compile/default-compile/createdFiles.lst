@@ -1,0 +1,3 @@
+ryerson/ca/waitlist/endpoint/ApplicationConfig.class
+ryerson/ca/waitlist/helper/Waitlist.class
+ryerson/ca/waitlist/persistence/Waitlist_CRUD.class
