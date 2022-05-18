@@ -1,0 +1,7 @@
+ryerson/ca/searchcourse/helper/Course.class
+ryerson/ca/searchcourse/helper/Instructor.class
+ryerson/ca/searchcourse/persistence/Course_CRUD.class
+ryerson/ca/searchcourse/helper/CoursesXML.class
+ryerson/ca/searchcourse/endpoint/SearchResource.class
+ryerson/ca/searchcourse/business/SearchBusiness.class
+ryerson/ca/searchcourse/endpoint/ApplicationConfig.class

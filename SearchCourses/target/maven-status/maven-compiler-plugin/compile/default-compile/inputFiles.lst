@@ -1,0 +1,7 @@
+/home/student/NetBeansProjects/lab5/SearchCourses/src/main/java/ryerson/ca/searchcourse/endpoint/ApplicationConfig.java
+/home/student/NetBeansProjects/lab5/SearchCourses/src/main/java/ryerson/ca/searchcourse/endpoint/SearchResource.java
+/home/student/NetBeansProjects/lab5/SearchCourses/src/main/java/ryerson/ca/searchcourse/persistence/Course_CRUD.java
+/home/student/NetBeansProjects/lab5/SearchCourses/src/main/java/ryerson/ca/searchcourse/helper/Course.java
+/home/student/NetBeansProjects/lab5/SearchCourses/src/main/java/ryerson/ca/searchcourse/helper/Instructor.java
+/home/student/NetBeansProjects/lab5/SearchCourses/src/main/java/ryerson/ca/searchcourse/helper/CoursesXML.java
+/home/student/NetBeansProjects/lab5/SearchCourses/src/main/java/ryerson/ca/searchcourse/business/SearchBusiness.java
