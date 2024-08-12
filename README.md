@@ -4,4 +4,4 @@ Web application for a course registration system where students can login to add
 
 
 The Web application was deployed over google cloud using Kubernetes. Docker was also used. Microservice and n-layer architecture was used to create this web application. 
-Implemented a RESTful API for efficient communication between the client and server
+Implemented a RESTful API for efficient communication between the client and server.
